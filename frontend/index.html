@@ -4,18 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PlayLocal — Find Players. Join Games. Play More.</title>
+  <title>PlayLocal — Find Players. Fill Your Game.</title>
   <meta name="description"
-    content="PlayLocal connects you with local players for futsal, cricket, basketball, badminton and more. Create or join a match near you in Nepal.">
+    content="PlayLocal connects you with local players for futsal, cricket, basketball and badminton. Create or join a match near you in Kathmandu.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
@@ -24,36 +23,34 @@
   <header class="navbar-wrapper" id="mainNav">
     <div class="nav-container">
       <div class="logo-block" id="navLogoBtn" role="button" tabindex="0" aria-label="PlayLocal Home">
-        <div class="logo-icon-wrap"></div>
+        <span class="logo-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M4 18 Q 10 6, 20 5" stroke="#B8E61E" stroke-width="2.2" stroke-linecap="round" />
+            <circle cx="20" cy="5" r="2.4" fill="#B8E61E" />
+          </svg>
+        </span>
         <span class="logo-brand">Play<span class="accent-highlight">Local</span></span>
       </div>
 
       <nav class="nav-navigation" id="navLinks" aria-label="Main Navigation">
-        <button class="nav-link-item active" data-page="landing" id="navHome">
-          <span class="nav-text">Home</span>
-        </button>
-        <button class="nav-link-item" data-page="matches" id="navMatches">
-          <span class="nav-text">Find Matches</span>
-          <span class="nav-indicator-dot"></span>
-        </button>
-        <button class="nav-link-item" data-page="create" id="navCreate">
-          <span class="nav-text">Create Match</span>
-        </button>
-        <button class="nav-link-item action-style" data-page="auth" id="authNavBtn">
-          <span class="nav-text">Login / Register</span>
-        </button>
-        <div id="userBadgeProfile" class="profile-badge-group" style="display:none;">
-          <span id="userBadge" class="avatar-circle-display"></span>
-          <button class="logout-action-trigger" id="logoutBtn" aria-label="Logout Account">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+        <button class="nav-link-item active" data-page="landing">Home</button>
+        <button class="nav-link-item" data-page="matches">Matches</button>
+        <button class="nav-link-item" data-page="create">Host</button>
+        <button class="nav-link-item action-style" data-page="auth" id="authNavBtn">Sign in</button>
+
+        <div id="userBadgeProfile" class="profile-badge-group" style="display: none;">
+          <span id="userBadge" class="avatar-circle-display">PL</span>
+          <button class="logout-action-trigger" id="logoutBtn" aria-label="Log out" title="Log out">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
           </button>
         </div>
       </nav>
 
       <button class="mobile-menu-trigger" id="mobileToggle" aria-expanded="false" aria-controls="navLinks"
-        aria-label="Toggle navigation interface">
+        aria-label="Toggle Navigation">
         <span class="bar burger-top"></span>
         <span class="bar burger-mid"></span>
         <span class="bar burger-bot"></span>
@@ -63,97 +60,98 @@
 
   <main id="appContentContainer">
 
-    <section id="landing" class="page-container view-state-active" aria-hidden="false">
-      <div class="kinetic-hero-grid">
-        <div class="hero-narrative-block">
-          <div class="community-ticker-badge">
-            <span class="pulse-ring-element"></span>
-            <span class="ticker-text">⚡ <b id="livePlayerCount">1,240</b> Sports Enthusiasts Active in Nepal Now</span>
-          </div>
-          <h1 class="kinetic-display-title">
-            FIND PLAYERS.<br>
-            <span class="slanted-text-highlight">JOIN GAMES.</span><br>
-            PLAY MORE.
-          </h1>
-          <p class="hero-descriptive-prose">
-            Break away from the screen. PlayLocal bridges the gap between local courts and active squads. Whether it's
-            high-intensity futsal in Kathmandu, half-court basketball hoops, or early morning badminton rallies—your
-            next game is waiting.
-          </p>
+    <section id="landing" class="page-container view-state-active">
+      <div class="hero-section">
+        <svg class="hero-bg-arc" aria-hidden="true" viewBox="0 0 1200 600" preserveAspectRatio="none">
+          <path d="M -50 500 Q 400 50, 1250 250" stroke="#B8E61E" stroke-width="1.5" fill="none" />
+        </svg>
 
-          <div class="hero-interactive-actions">
-            <button class="action-btn-primary size-lg" data-page="matches">
-              <span>Explore Active Matches</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-            <button class="action-btn-secondary size-lg" data-page="create">
-              <span>Host a Match</span>
-            </button>
-          </div>
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="eyebrow-badge">
+              <span class="pulse-dot"></span>
+              <span class="eyebrow-text"><strong id="livePlayerCount">1,540</strong> players active across
+                Kathmandu</span>
+            </div>
 
-          <div class="dashboard-metric-strip">
-            <div class="metric-node">
-              <div class="metric-header-value"><span id="totalMatches">4</span></div>
-              <div class="metric-footer-caption">Active Matches</div>
-            </div>
-            <div class="metric-node-divider" role="none"></div>
-            <div class="metric-node">
-              <div class="metric-header-value">450+</div>
-              <div class="metric-footer-caption">Squads Connected</div>
-            </div>
-            <div class="metric-node-divider" role="none"></div>
-            <div class="metric-node">
-              <div class="metric-header-value">5</div>
-              <div class="metric-footer-caption">Premium Venues</div>
-            </div>
-          </div>
-        </div>
+            <h1 class="hero-title">Find players.<br>Fill your game.</h1>
 
-        <div class="hero-visual-card-wrapper">
-          <div class="premium-featured-glass-card">
-            <div class="glass-card-header">
-              <span class="live-activity-indicator">
-                <span class="indicator-core"></span>
-                <span class="indicator-wave"></span>
-              </span>
-              <span class="glass-tag">RECOMMENDED SQUAD MATCH</span>
-            </div>
-            <div class="glass-card-body">
-              <div class="sport-identity-row">
-                <span class="sport-icon-badge color-futsal">⚽</span>
-                <span class="sport-name-label">Futsal • Competitive Elite</span>
-              </div>
-              <h3 class="venue-display-heading">Nagarjun Futsal Arena</h3>
-              <div class="timing-detail-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
+            <p class="hero-subtitle">
+              Skip the inactive group chats. PlayLocal connects you with pickup futsal, cricket, basketball and
+              badminton games near you — find an open spot or fill one in seconds.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-lg" id="heroExploreBtn">
+                <span>Find a match</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                <span>Today, 6:30 PM <span class="time-countdown-inline">(In 2 hours)</span></span>
-              </div>
+              </button>
+              <button class="btn btn-ghost btn-lg" id="heroHostBtn">
+                <span>Host a game</span>
+              </button>
+            </div>
 
-              <div class="squad-allocation-preview">
-                <div class="squad-meta-info">
-                  <span class="squad-meta-title">Roster Composition</span>
-                  <span class="squad-meta-count">8/10 Players Locked</span>
-                </div>
-                <div class="avatar-squad-row">
-                  <div class="avatar-node" style="--avatar-bg: #E07A5F">DN</div>
-                  <div class="avatar-node" style="--avatar-bg: #3D5A80">SN</div>
-                  <div class="avatar-node" style="--avatar-bg: #98C1D9">RK</div>
-                  <div class="avatar-node" style="--avatar-bg: #2A9D8F">AP</div>
-                  <div class="avatar-node overflow-node">+4</div>
-                </div>
-                <div class="progress-track-bar">
-                  <div class="progress-filled-bar" style="width: 80%"></div>
-                </div>
+            <div class="stat-strip">
+              <div class="stat-item">
+                <span class="stat-value" id="statMatches">4</span>
+                <span class="stat-label">Active matches</span>
+              </div>
+              <div class="stat-divider" role="none"></div>
+              <div class="stat-item">
+                <span class="stat-value" id="statPlayers">17</span>
+                <span class="stat-label">Players locked in</span>
+              </div>
+              <div class="stat-divider" role="none"></div>
+              <div class="stat-item">
+                <span class="stat-value">NPR 0</span>
+                <span class="stat-label">Platform fee</span>
               </div>
             </div>
-            <div class="glass-card-footer">
-              <span class="slots-available-status status-urgent">🔥 Only 2 Slots Left</span>
-              <button class="glass-action-button" data-page="matches">Lock Entry Slot</button>
+          </div>
+
+          <div class="hero-visual">
+            <div class="match-preview-card">
+              <div class="preview-header">
+                <span class="live-badge">
+                  <span class="live-dot"></span> Live
+                </span>
+                <span class="preview-tag">Top match nearby</span>
+              </div>
+
+              <div class="preview-body">
+                <div class="sport-identity-row">
+                  <span class="sport-icon-badge">⚽</span>
+                  <span class="sport-name-label">Futsal · Mid-tier regulars</span>
+                </div>
+
+                <div class="venue-location-heading-group">
+                  <h3 class="venue-display-heading">Nagarjun Futsal Arena</h3>
+                  <a href="https://maps.google.com/?q=Nagarjun+Futsal+Balaju" target="_blank" rel="noopener noreferrer"
+                    class="card-map-pin-anchor">
+                    <span class="map-pin-icon">📍</span> <span class="map-pin-text">Map</span>
+                  </a>
+                </div>
+                <p class="venue-sub-location">Balaju, Kathmandu</p>
+
+                <div class="timing-detail-badge">Tonight · 6:30 PM</div>
+
+                <div class="squad-allocation-preview">
+                  <div class="squad-meta-info">
+                    <span class="squad-meta-title">Spots filled</span>
+                    <span class="squad-meta-count" id="featuredCountText">4 / 10</span>
+                  </div>
+                  <div class="progress-track-bar">
+                    <div class="progress-filled-bar" id="featuredProgressBar" style="width: 40%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="preview-footer">
+                <span class="slots-available-status">6 spots left</span>
+                <button class="btn btn-primary btn-sm" id="featuredJoinBtn">Join match</button>
+              </div>
             </div>
           </div>
         </div>
@@ -161,473 +159,213 @@
 
       <div class="value-proposition-matrix">
         <div class="value-feature-card">
-          <div class="feature-icon-frame">⚡</div>
-          <h3 class="feature-card-heading">Instant Matchmaking</h3>
-          <p class="feature-card-body">Eliminate long messaging threads. Discover games, secure your spot, and hit the
-            court instantly.</p>
-        </div>
-        <div class="value-feature-card">
-          <div class="feature-icon-frame">📍</div>
-          <h3 class="feature-card-heading">Verified Local Venues</h3>
-          <p class="feature-card-body">Explore matches at premium locations throughout your city, featuring certified
-            courts and accurate maps.</p>
-        </div>
-        <div class="value-feature-card">
-          <div class="feature-icon-frame">👥</div>
-          <h3 class="feature-card-heading">Squad Up & Coordinate</h3>
-          <p class="feature-card-body">Short on players? List your vacancy publicly and let vetted, passionate athletes
-            complete your line-up.</p>
-        </div>
-        <div class="value-feature-card">
-          <div class="feature-icon-frame">🏆</div>
-          <h3 class="feature-card-heading">Multi-Sport Variety</h3>
-          <p class="feature-card-body">Seamlessly alternate between football, cricket, basketball, and badminton rosters
-            with unified skill-tracking tags.</p>
-        </div>
-      </div>
-
-      <div class="community-pulse-section">
-        <div class="section-title-wrap">
-          <h2 class="premium-section-title">COMMUNITY PULSE</h2>
-          <p class="premium-section-subtitle">Real-time match events and roster updates around you</p>
-        </div>
-        <div class="pulse-layout-container">
-          <div class="activity-ticker-feed">
-            <div class="ticker-item-card">
-              <div class="ticker-user-avatar">🇳🇵</div>
-              <div class="ticker-narrative-content">
-                <p class="ticker-text-line"><strong>Aman T.</strong> joined <strong>Baneshwor Basketball Match</strong>
-                </p>
-                <span class="ticker-timestamp-text">3 minutes ago</span>
-              </div>
-            </div>
-            <div class="ticker-item-card">
-              <div class="ticker-user-avatar">🔥</div>
-              <div class="ticker-narrative-content">
-                <p class="ticker-text-line">New Match Created: <strong>Lalitpur Badminton Open Arena</strong></p>
-                <span class="ticker-timestamp-text">14 minutes ago</span>
-              </div>
-            </div>
-          </div>
-          <div class="trending-sports-sidebar">
-            <h4 class="sidebar-block-title">Trending This Week</h4>
-            <div class="trend-metric-row">
-              <span class="trend-label">⚽ Futsal</span>
-              <div class="trend-bar-wrapper">
-                <div class="trend-bar-fill" style="width: 92%"></div>
-              </div>
-              <span class="trend-percentage">92%</span>
-            </div>
-            <div class="trend-metric-row">
-              <span class="trend-label">🏸 Badminton</span>
-              <div class="trend-bar-wrapper">
-                <div class="trend-bar-fill" style="width: 74%"></div>
-              </div>
-              <span class="trend-percentage">74%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="social-trust-carousel">
-        <h3 class="trust-title-centered">Endorsed by Everyday Athletes</h3>
-        <div class="trust-grid-layout">
-          <blockquote class="testimonial-bubble">
-            <p>"Finding a reliable group for weekend futsal used to take days of coordination. With PlayLocal, I can
-              secure a high-quality match in under two minutes."</p>
-            <cite class="testimonial-author">— Rohan Shrestha, Kathmandu</cite>
-          </blockquote>
-          <blockquote class="testimonial-bubble">
-            <p>"As a college student, finding open badminton courts and partners was tough. This platform completely
-              solved that problem for our weekend sessions."</p>
-            <cite class="testimonial-author">— Sneha Sharma, Lalitpur</cite>
-          </blockquote>
-        </div>
-      </div>
-
-      <div class="how-it-works-architecture">
-        <div class="section-title-wrap alignment-center">
-          <h2 class="premium-section-title">THE GAMEPLAN</h2>
-          <p class="premium-section-subtitle">How PlayLocal gets you on the court seamlessly</p>
-        </div>
-        <div class="procedural-steps-grid">
-          <div class="procedural-step-node">
-            <div class="step-num-badge">01</div>
-            <div class="step-content-box">
-              <h4 class="step-action-heading">Filter & Discover</h4>
-              <p class="step-action-description">Browse nearby live games matching your preferred sport, timing, and
-                competitive skill tier.</p>
-            </div>
-          </div>
-          <div class="procedural-step-node">
-            <div class="step-num-badge">02</div>
-            <div class="step-content-box">
-              <h4 class="step-action-heading">Claim Your Slot</h4>
-              <p class="step-action-description">Secure your spot instantly on the match roster. No long confirmation
-                chains required.</p>
-            </div>
-          </div>
-          <div class="procedural-step-node">
-            <div class="step-num-badge">03</div>
-            <div class="step-content-box">
-              <h4 class="step-action-heading">Show Up & Play</h4>
-              <p class="step-action-description">Head down to the venue, connect with your squad, and get straight to
-                the action.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="matches" class="page-container" aria-hidden="true">
-      <div class="page-context-header">
-        <h2 class="premium-section-title">🔥 DISCOVER MATCHES</h2>
-        <p class="premium-section-subtitle">Vetted, crowd-sourced sporting actions running across your region</p>
-      </div>
-
-      <div class="parametric-filter-panel">
-        <div class="filter-input-wrapper">
-          <label for="filterSport" class="form-element-label-style">Sport Archetype</label>
-          <div class="custom-select-container">
-            <select id="filterSport" class="form-select-element">
-              <option value="all">All Sports Archetypes</option>
-              <option value="Futsal">⚽ Futsal Matches</option>
-              <option value="Cricket">🏏 Cricket Matches</option>
-              <option value="Basketball">🏀 Basketball Matches</option>
-              <option value="Badminton">🏸 Badminton Matches</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="filter-input-wrapper">
-          <label for="filterLocation" class="form-element-label-style">Target Geo-Location / Arena</label>
-          <div class="search-input-field-icon-wrap">
-            <span class="field-embedded-icon">📍</span>
-            <input type="text" id="filterLocation" class="form-text-input-element"
-              placeholder="Search by venue name or city...">
-          </div>
-        </div>
-
-        <div class="filter-input-wrapper">
-          <label for="filterTime" class="form-element-label-style">Temporal Window</label>
-          <div class="custom-select-container">
-            <select id="filterTime" class="form-select-element">
-              <option value="all">Any Temporal Window</option>
-              <option value="today">Happening Today</option>
-              <option value="upcoming">Upcoming Schedules</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="filter-action-button-group">
-          <button id="clearFilters" class="action-btn-utility" aria-label="Reset all search parameters">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+          <span class="feature-icon-frame" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
-            <span>Reset Filters</span>
-          </button>
+          </span>
+          <h3 class="feature-card-heading">No-show protection</h3>
+          <p class="feature-card-body">Every player confirms a phone number before joining, so you know exactly
+            who's showing up before you head out.</p>
         </div>
-      </div>
-
-      <div id="matchList" class="dynamic-match-cards-grid-matrix">
-        <div class="skeleton-card-fallback-component">
-          <div class="skeleton-wave-line heavy-height"></div>
-          <div class="skeleton-wave-line medium-width"></div>
-          <div class="skeleton-wave-line short-width"></div>
+        <div class="value-feature-card">
+          <span class="feature-icon-frame" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="12" cy="10" r="2.4" />
+            </svg>
+          </span>
+          <h3 class="feature-card-heading">Verified locations</h3>
+          <p class="feature-card-body">Every host shares a direct map link, so you can get walking directions
+            instantly instead of guessing which gate to use.</p>
+        </div>
+        <div class="value-feature-card">
+          <span class="feature-icon-frame" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </span>
+          <h3 class="feature-card-heading">Fair cost splitting</h3>
+          <p class="feature-card-body">No platform markup. Court fees are agreed up front and divided evenly among
+            everyone who plays.</p>
         </div>
       </div>
     </section>
 
-    <section id="create" class="page-container" aria-hidden="true">
-      <div class="page-context-header">
-        <h2 class="premium-section-title">🎯 HOST A NEW MATCH</h2>
-        <p class="premium-section-subtitle">Establish an open roster slot, broadcast to local communities, and fill your
-          lineup fast</p>
+    <section id="matches" class="page-container">
+      <div class="section-header">
+        <span class="eyebrow-label">Browse</span>
+        <h2 class="section-title">Matches near you</h2>
+        <p class="section-subtitle">Live pickup games across Kathmandu — filter by sport and lock in your spot.</p>
       </div>
 
-      <div class="form-layout-containment-card">
-        <form id="createMatchForm" class="premium-structured-form" novalidate>
-          <div class="form-grid-layout-row col-2">
-            <div class="filter-input-wrapper">
-              <label for="sportType" class="form-element-label-style">Sport Type <span
-                  class="required-asterisk">*</span></label>
-              <select id="sportType" class="form-select-element" required>
-                <option value="">— Choose Associated Sport —</option>
-                <option value="Futsal">⚽ Futsal</option>
-                <option value="Cricket">🏏 Cricket</option>
-                <option value="Basketball">🏀 Basketball</option>
-                <option value="Badminton">🏸 Badminton</option>
+      <div class="filter-panel">
+        <div class="search-field">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.35-4.35" stroke-linecap="round" />
+          </svg>
+          <input type="text" id="filterLocationInput" placeholder="Search by venue or neighborhood">
+        </div>
+
+        <div class="sport-pills" role="group" aria-label="Filter by sport">
+          <button class="sport-pill-btn active" data-sport="all">All sports</button>
+          <button class="sport-pill-btn" data-sport="Futsal">Futsal</button>
+          <button class="sport-pill-btn" data-sport="Cricket">Cricket</button>
+          <button class="sport-pill-btn" data-sport="Basketball">Basketball</button>
+          <button class="sport-pill-btn" data-sport="Badminton">Badminton</button>
+        </div>
+      </div>
+
+      <div id="matchList" class="match-listings-grid">
+      </div>
+    </section>
+
+    <section id="create" class="page-container">
+      <div class="form-shell">
+        <div class="section-header text-center">
+          <span class="eyebrow-label">Host</span>
+          <h2 class="section-title">Host a match</h2>
+          <p class="section-subtitle">Set up your game once and nearby players can find it instantly.</p>
+        </div>
+
+        <form id="createMatchForm" class="form-card">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="formSport">Sport</label>
+              <select id="formSport" required>
+                <option value="" disabled selected>Choose a sport</option>
+                <option value="Futsal">Futsal</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Badminton">Badminton</option>
               </select>
             </div>
-            <div class="filter-input-wrapper">
-              <label for="location" class="form-element-label-style">Venue Destination Hall / Field <span
-                  class="required-asterisk">*</span></label>
-              <input type="text" id="location" class="form-text-input-element"
-                placeholder="e.g. Baneshwor Futsal Arena, Kathmandu" required>
+
+            <div class="form-field">
+              <label for="formLevel">Skill level</label>
+              <select id="formLevel" required>
+                <option value="Casual / Mix">Casual / mix</option>
+                <option value="Mid-Tier Regulars">Mid-tier regulars</option>
+                <option value="Competitive Elite">Competitive elite</option>
+              </select>
             </div>
           </div>
 
-          <div class="form-grid-layout-row col-2">
-            <div class="filter-input-wrapper">
-              <label for="dateTime" class="form-element-label-style">Match Date & Kickoff Time <span
-                  class="required-asterisk">*</span></label>
-              <input type="datetime-local" id="dateTime" class="form-text-input-element" required>
-            </div>
-            <div class="filter-input-wrapper">
-              <label for="playersNeeded" class="form-element-label-style">Total Vacant Slots Required <span
-                  class="required-asterisk">*</span></label>
-              <input type="number" id="playersNeeded" class="form-text-input-element" min="2" max="30"
-                placeholder="e.g. 10 available slots" required>
-            </div>
+          <div class="form-field">
+            <label for="formLocation">Venue name</label>
+            <input type="text" id="formLocation" placeholder="e.g., Dhanwantari Futsal, Chabahil, Kathmandu" required>
           </div>
 
-          <div class="form-grid-layout-row col-2">
-            <div class="filter-input-wrapper">
-              <label for="organizer" class="form-element-label-style">Organizer Lead Identifier Name <span
-                  class="required-asterisk">*</span></label>
-              <input type="text" id="organizer" class="form-text-input-element" placeholder="e.g. Sulav Adhikari"
-                required>
+          <div class="form-field">
+            <label for="formMapUrl">Google Maps link</label>
+            <div class="input-with-action">
+              <input type="url" id="formMapUrl" placeholder="https://maps.app.goo.gl/..." pattern="https://.*"
+                title="Please enter a valid Google Maps address URL starting with https://" required>
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="input-action-link">
+                Open Maps
+              </a>
             </div>
-            <div class="filter-input-wrapper">
-              <label for="organizerPhone" class="form-element-label-style">Organizer Contact Line (Absolute) <span
-                  class="required-asterisk">*</span></label>
-              <input type="tel" id="organizerPhone" class="form-text-input-element" placeholder="e.g. +977 98XXXXXXXX"
-                required>
-            </div>
+            <p class="field-hint">Open Google Maps, find your venue, tap <b>Share → Copy link</b>, then paste it
+              here so players don't get lost.</p>
           </div>
 
-          <div class="filter-input-wrapper">
-            <label for="teamFilings" class="form-element-label-style">Team Line-up Configuration / Roster Goals <span
-                class="required-asterisk">*</span></label>
-            <input type="text" id="teamFilings" class="form-text-input-element"
-              placeholder="e.g. Need 2 physical defenders and 1 fluid ball-playing striker" required>
-          </div>
-
-          <div class="filter-input-wrapper">
-            <label for="notes" class="form-element-label-style">Operational Match Directives <span
-                class="optional-tag">(Optional Parameter)</span></label>
-            <textarea id="notes" class="form-textarea-input-element"
-              placeholder="Mention field rental splitting costs, ground rules, required footwear restrictions..."></textarea>
-          </div>
-
-          <button type="submit" class="action-btn-primary size-full-width">
-            <span>🚀 Publish Match To Local Networks</span>
-          </button>
-        </form>
-        <div id="createMsg" class="form-feedback-message-block success-variant" role="alert"></div>
-      </div>
-    </section>
-
-    <section id="auth" class="page-container" aria-hidden="true">
-      <div class="page-context-header">
-        <h2 class="premium-section-title">🔐 ATHLETE AUTHENTICATION</h2>
-        <p class="premium-section-subtitle">Access your player profile, monitor game registries, and review matches</p>
-      </div>
-
-      <div class="auth-card-structural-frame">
-        <div class="auth-tabs-navigation-strip">
-          <button class="auth-tab-toggle-trigger active" data-tab="login">Sign In Account</button>
-          <button class="auth-tab-toggle-trigger" data-tab="register">Register Roster</button>
-        </div>
-
-        <div class="google-sso-integration-card">
-          <div class="google-sso-container-inner">
-            <div id="g_id_onload"
-              data-client_id="436047080407-9o9vlof6mc672vsq268cmmhhcbhkod6j.apps.googleusercontent.com"
-              data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
-              data-auto_prompt="false">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="formDateTime">Date &amp; time</label>
+              <input type="datetime-local" id="formDateTime" required>
             </div>
-            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="filled_dark"
-              data-text="signin_with" data-size="large" data-logo_alignment="left" data-width="100%">
+
+            <div class="form-field">
+              <label for="formPlayers">Players needed</label>
+              <input type="number" id="formPlayers" min="2" max="22" placeholder="e.g., 10" required>
             </div>
           </div>
-          <p class="sso-safety-disclaimer-text">Secure instantaneous token login processed by Google Security Framework
-          </p>
-        </div>
 
-        <div class="ui-structural-separator">
-          <span class="separator-dash-line"></span>
-          <span class="separator-label-context">OR VIA REGISTERED EMAIL</span>
-          <span class="separator-dash-line"></span>
-        </div>
-
-        <form id="loginForm" class="premium-structured-form" novalidate>
-          <div class="filter-input-wrapper">
-            <label for="loginEmail" class="form-element-label-style">Email Address</label>
-            <input type="email" id="loginEmail" class="form-text-input-element" placeholder="you@example.com" required>
-          </div>
-          <div class="filter-input-wrapper">
-            <label for="loginPassword" class="form-element-label-style">Password Vector</label>
-            <input type="password" id="loginPassword" class="form-text-input-element" placeholder="••••••••" required>
-          </div>
-          <button type="submit" class="action-btn-primary size-md size-full-width">Authenticate Secure Session</button>
-          <div class="sandbox-credentials-hint-box">
-            <span class="hint-icon">💡</span>
-            <p class="hint-text"><strong>Staging Credentials:</strong> rajesh@example.com / <code
-                class="inline-code-snippet">password123</code></p>
-          </div>
-        </form>
-
-        <form id="registerForm" class="premium-structured-form" style="display:none;" novalidate>
-          <div class="filter-input-wrapper">
-            <label for="registerName" class="form-element-label-style">Full Legal Name</label>
-            <input type="text" id="registerName" class="form-text-input-element" placeholder="Your full name" required>
-          </div>
-          <div class="filter-input-wrapper">
-            <label for="registerEmail" class="form-element-label-style">Email Account Address</label>
-            <input type="email" id="registerEmail" class="form-text-input-element" placeholder="you@example.com"
+          <div class="form-field">
+            <label for="formFilings">Team notes</label>
+            <input type="text" id="formFilings" placeholder="e.g., Bringing bibs, looking for a permanent keeper"
               required>
           </div>
-          <div class="filter-input-wrapper">
-            <label for="registerPhone" class="form-element-label-style">Mobile Coordination Line <span
-                class="optional-tag">(Recommended for OTP)</span></label>
-            <input type="tel" id="registerPhone" class="form-text-input-element" placeholder="e.g. 98XXXXXXXX"
-              pattern="[0-9]{10}">
-          </div>
-          <div class="filter-input-wrapper">
-            <label for="registerPassword" class="form-element-label-style">Password Key Definition <span
-                class="optional-tag">(Min 6 characters)</span></label>
-            <input type="password" id="registerPassword" class="form-text-input-element" placeholder="••••••••"
-              minlength="6" required>
-          </div>
-          <button type="submit" class="action-btn-primary size-md size-full-width">Establish New Athlete
-            Profile</button>
-        </form>
 
-        <div id="authMsg" class="form-feedback-message-block" role="alert"></div>
+          <div class="form-field">
+            <label for="formNotes">Cost &amp; court details</label>
+            <textarea id="formNotes" rows="3"
+              placeholder="e.g., Total ground fee is NPR 1,600, split evenly among players. Indoor rubber mat floor."
+              required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="formOrganizer">Your name</label>
+              <input type="text" id="formOrganizer" placeholder="Full name" required>
+            </div>
+            <div class="form-field">
+              <label for="formPhone">Phone number</label>
+              <input type="tel" id="formPhone" placeholder="98XXXXXXXX" pattern="[0-9]{10}"
+                title="Please enter a valid 10-digit mobile number" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-full">Publish match</button>
+        </form>
       </div>
     </section>
 
-    <section id="details" class="page-container" aria-hidden="true">
-      <button class="action-btn-utility-back" id="backToMatches" aria-label="Return back to listings view">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-        <span>Return to Listings Grid</span>
-      </button>
-      <div id="matchDetailsContent" class="dynamic-hydrated-details-view-frame"></div>
-    </section>
-  </main>
+    <section id="auth" class="page-container">
+      <div class="form-shell narrow text-center">
+        <div class="auth-card">
+          <span class="eyebrow-label">Demo</span>
+          <h2 class="section-title">Sign in to PlayLocal</h2>
+          <p class="section-subtitle">This is a sandbox session — sign in with any name to try joining a match.</p>
 
-  <div id="phoneModal" class="modal-overlay-backdrop-container" role="dialog" aria-modal="true"
-    aria-labelledby="modalTitleContext" style="display: none;">
-    <div class="modal-surface-card-container animate-slide-up">
-      <div class="modal-header-branding-row">
-        <div class="modal-brand-icon-wrap" style="background: var(--color-primary-muted); color: var(--color-primary);">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
+          <form id="sandboxLoginForm" class="form-card">
+            <div class="form-field text-left">
+              <label for="authName">Your name</label>
+              <input type="text" id="authName" value="Aayush Shrestha" required>
+            </div>
+            <div class="form-field text-left">
+              <label for="authPhone">Mobile number (+977)</label>
+              <input type="tel" id="authPhone" value="9851234567" pattern="[0-9]{10}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-full">Continue</button>
+          </form>
+
+          <div class="auth-divider-line"><span>or</span></div>
+
+          <button type="button" class="btn btn-ghost btn-lg btn-full" id="mockGoogleBtn">Quick demo sign-in</button>
         </div>
-        <h3 id="modalTitleContext" class="modal-surface-headline">Security Verification Gateway</h3>
       </div>
+    </section>
 
-      <div id="otpStepPhone" class="otp-view-panel">
-        <p class="modal-surface-explanatory-text">
-          To maintain account verification vectors across local courts, secure your mobile coordination route via SMS
-          tracking handshake.
-        </p>
-        <form id="phoneSubmitForm" class="premium-structured-form" novalidate>
-          <div class="filter-input-wrapper">
-            <label for="modalPhone" class="form-element-label-style">Mobile Coordination Line</label>
-            <div class="prefixed-input-field-group">
-              <span class="field-prefix-tag">🇳🇵 +977</span>
-              <input type="tel" id="modalPhone" class="form-text-input-element pattern-enforced"
-                placeholder="98XXXXXXXX" required pattern="[0-9]{10}">
-            </div>
-            <p class="form-field-contextual-hint">Provide your primary 10-digit carrier coordination number</p>
-          </div>
-          <div class="modal-action-footer-strip">
-            <button type="submit" class="action-btn-primary size-md">
-              <span>Send OTP Token</span>
-            </button>
-            <button type="button" id="modalDisconnectBtn" class="action-btn-secondary size-md">
-              Cancel Session
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <div id="otpStepCode" class="otp-view-panel" style="display: none;">
-        <p class="modal-surface-explanatory-text">
-          A dynamic security handshake key was dispatched to <strong id="displayTargetPhone"
-            style="color: var(--color-primary);">+977 98...</strong>. Enter the temporary transaction token sequence
-          below.
-        </p>
-        <form id="otpVerifyForm" class="premium-structured-form" novalidate>
-          <div class="filter-input-wrapper">
-            <label class="form-element-label-style">Enter 6-Digit Secure Code Matrix</label>
-            <div class="otp-input-row"
-              style="display: flex; gap: 8px; justify-content: space-between; margin-top: 12px; margin-bottom: 4px;">
-              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
-                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
-                pattern="[0-9]" inputmode="numeric">
-              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
-                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
-                pattern="[0-9]" inputmode="numeric">
-              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
-                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
-                pattern="[0-9]" inputmode="numeric">
-              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
-                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
-                pattern="[0-9]" inputmode="numeric">
-              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
-                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
-                pattern="[0-9]" inputmode="numeric">
-              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
-                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
-                pattern="[0-9]" inputmode="numeric">
-            </div>
-
-            <div
-              style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; margin-bottom: 8px;">
-              <span id="otpCountdownText" style="font-size: 13px; color: var(--color-text-secondary);">Resend
-                verification in <b id="otpTimerSeconds" style="color:var(--accent-futsal);">30</b> seconds</span>
-              <button type="button" id="resendOtpBtn"
-                style="background:none; border:none; color:var(--color-primary); font-size:13px; font-weight:700; cursor:pointer; padding:0; display:none;">Resend
-                OTP Key</button>
-            </div>
-            <p class="form-field-contextual-hint">Staging Sandbox validation gate pass token: <code
-                class="inline-code-snippet">123456</code></p>
-          </div>
-          <div class="modal-action-footer-strip" style="margin-top: 24px;">
-            <button type="submit" class="action-btn-primary size-md">
-              <span>Verify & Bind Profile</span>
-            </button>
-            <button type="button" id="otpBackToPhoneBtn" class="action-btn-secondary size-md">
-              Back
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  </main>
 
   <footer class="architectural-footer">
     <div class="footer-grid-container">
       <div class="footer-brand-summary">
-        <div class="logo-block invert-graphic-color">
-          <span class="logo-brand">Play<span class="accent-highlight">Local</span></span>
-        </div>
+        <span class="logo-brand">Play<span class="accent-highlight">Local</span></span>
         <p class="footer-corporate-abstract">
-          The premium open-source matchmaking framework for local court mobilization across Nepal. Built for athletes,
-          run by communities.
+          Helping local players find pickup games across Kathmandu — organized by community captains, with no
+          platform fees.
         </p>
       </div>
       <div class="footer-links-column-block">
-        <span class="footer-column-header">Supported Ecosystems</span>
+        <span class="footer-column-header">Sports</span>
         <ul class="footer-links-list-unstyled">
-          <li>Futsal Arenas</li>
-          <li>Cricket Nets</li>
-          <li>Basketball Hardcourts</li>
-          <li>Badminton Academies</li>
+          <li>Futsal</li>
+          <li>Cricket</li>
+          <li>Basketball</li>
+          <li>Badminton</li>
         </ul>
       </div>
     </div>
     <div class="footer-copyright-disclaimer-strip">
-      <p class="copyright-text">PlayLocal Engineering Initiative &copy; 2026. All rights reserved. Vetted Live Node
-        Deployment.</p>
-      <div class="legal-links-wrap"><span>Made with ❤️ for sports lovers</span></div>
+      <p class="copyright-text">© 2026 PlayLocal. Built for the local sports community.</p>
     </div>
   </footer>
 
