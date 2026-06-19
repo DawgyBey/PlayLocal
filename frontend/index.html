@@ -24,8 +24,7 @@
   <header class="navbar-wrapper" id="mainNav">
     <div class="nav-container">
       <div class="logo-block" id="navLogoBtn" role="button" tabindex="0" aria-label="PlayLocal Home">
-        <div class="logo-icon-wrap">
-        </div>
+        <div class="logo-icon-wrap"></div>
         <span class="logo-brand">Play<span class="accent-highlight">Local</span></span>
       </div>
 
@@ -349,7 +348,6 @@
 
       <div class="form-layout-containment-card">
         <form id="createMatchForm" class="premium-structured-form" novalidate>
-
           <div class="form-grid-layout-row col-2">
             <div class="filter-input-wrapper">
               <label for="sportType" class="form-element-label-style">Sport Type <span
@@ -362,7 +360,6 @@
                 <option value="Badminton">🏸 Badminton</option>
               </select>
             </div>
-
             <div class="filter-input-wrapper">
               <label for="location" class="form-element-label-style">Venue Destination Hall / Field <span
                   class="required-asterisk">*</span></label>
@@ -377,7 +374,6 @@
                   class="required-asterisk">*</span></label>
               <input type="datetime-local" id="dateTime" class="form-text-input-element" required>
             </div>
-
             <div class="filter-input-wrapper">
               <label for="playersNeeded" class="form-element-label-style">Total Vacant Slots Required <span
                   class="required-asterisk">*</span></label>
@@ -393,7 +389,6 @@
               <input type="text" id="organizer" class="form-text-input-element" placeholder="e.g. Sulav Adhikari"
                 required>
             </div>
-
             <div class="filter-input-wrapper">
               <label for="organizerPhone" class="form-element-label-style">Organizer Contact Line (Absolute) <span
                   class="required-asterisk">*</span></label>
@@ -426,7 +421,7 @@
 
     <section id="auth" class="page-container" aria-hidden="true">
       <div class="page-context-header">
-        <h2 class="premium-section-title">🔐 ATHLETE ATHENTICATION</h2>
+        <h2 class="premium-section-title">🔐 ATHLETE AUTHENTICATION</h2>
         <p class="premium-section-subtitle">Access your player profile, monitor game registries, and review matches</p>
       </div>
 
@@ -447,7 +442,8 @@
               data-text="signin_with" data-size="large" data-logo_alignment="left" data-width="100%">
             </div>
           </div>
-          <p class="sso-safety-disclaimer-text">Secure instantaneous token login processed by Google Security</p>
+          <p class="sso-safety-disclaimer-text">Secure instantaneous token login processed by Google Security Framework
+          </p>
         </div>
 
         <div class="ui-structural-separator">
@@ -485,8 +481,9 @@
           </div>
           <div class="filter-input-wrapper">
             <label for="registerPhone" class="form-element-label-style">Mobile Coordination Line <span
-                class="optional-tag">(Optional)</span></label>
-            <input type="tel" id="registerPhone" class="form-text-input-element" placeholder="e.g. +977 98XXXXXXXX">
+                class="optional-tag">(Recommended for OTP)</span></label>
+            <input type="tel" id="registerPhone" class="form-text-input-element" placeholder="e.g. 98XXXXXXXX"
+              pattern="[0-9]{10}">
           </div>
           <div class="filter-input-wrapper">
             <label for="registerPassword" class="form-element-label-style">Password Key Definition <span
@@ -509,49 +506,100 @@
         </svg>
         <span>Return to Listings Grid</span>
       </button>
-
-      <div id="matchDetailsContent" class="dynamic-hydrated-details-view-frame">
-      </div>
+      <div id="matchDetailsContent" class="dynamic-hydrated-details-view-frame"></div>
     </section>
   </main>
 
   <div id="phoneModal" class="modal-overlay-backdrop-container" role="dialog" aria-modal="true"
-    aria-labelledby="modalTitleContext">
+    aria-labelledby="modalTitleContext" style="display: none;">
     <div class="modal-surface-card-container animate-slide-up">
       <div class="modal-header-branding-row">
-        <div class="modal-brand-icon-wrap">
+        <div class="modal-brand-icon-wrap" style="background: var(--color-primary-muted); color: var(--color-primary);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           </svg>
         </div>
-        <h3 id="modalTitleContext" class="modal-surface-headline">Account Verification Required</h3>
+        <h3 id="modalTitleContext" class="modal-surface-headline">Security Verification Gateway</h3>
       </div>
-      <p class="modal-surface-explanatory-text">
-        To maintain an accountable community and coordinate field access costs, we require a valid mobile coordination
-        number.
-      </p>
 
-      <form id="phoneUpdateForm" class="premium-structured-form" novalidate>
-        <div class="filter-input-wrapper">
-          <label for="modalPhone" class="form-element-label-style">Mobile Coordination Line</label>
-          <div class="prefixed-input-field-group">
-            <span class="field-prefix-tag">🇳🇵 +977</span>
-            <input type="tel" id="modalPhone" class="form-text-input-element pattern-enforced" placeholder="98XXXXXXXX"
-              required pattern="[0-9]{10}">
+      <div id="otpStepPhone" class="otp-view-panel">
+        <p class="modal-surface-explanatory-text">
+          To maintain account verification vectors across local courts, secure your mobile coordination route via SMS
+          tracking handshake.
+        </p>
+        <form id="phoneSubmitForm" class="premium-structured-form" novalidate>
+          <div class="filter-input-wrapper">
+            <label for="modalPhone" class="form-element-label-style">Mobile Coordination Line</label>
+            <div class="prefixed-input-field-group">
+              <span class="field-prefix-tag">🇳🇵 +977</span>
+              <input type="tel" id="modalPhone" class="form-text-input-element pattern-enforced"
+                placeholder="98XXXXXXXX" required pattern="[0-9]{10}">
+            </div>
+            <p class="form-field-contextual-hint">Provide your primary 10-digit carrier coordination number</p>
           </div>
-          <p class="form-field-contextual-hint">Provide your standard 10-digit primary carrier destination line</p>
-        </div>
+          <div class="modal-action-footer-strip">
+            <button type="submit" class="action-btn-primary size-md">
+              <span>Send OTP Token</span>
+            </button>
+            <button type="button" id="modalDisconnectBtn" class="action-btn-secondary size-md">
+              Cancel Session
+            </button>
+          </div>
+        </form>
+      </div>
 
-        <div class="modal-action-footer-strip">
-          <button type="submit" class="action-btn-primary size-md">
-            <span>Verify & Complete Profile</span>
-          </button>
-          <button type="button" id="modalLogoutBtn" class="action-btn-secondary size-md">
-            Disconnect Session
-          </button>
-        </div>
-      </form>
+      <div id="otpStepCode" class="otp-view-panel" style="display: none;">
+        <p class="modal-surface-explanatory-text">
+          A dynamic security handshake key was dispatched to <strong id="displayTargetPhone"
+            style="color: var(--color-primary);">+977 98...</strong>. Enter the temporary transaction token sequence
+          below.
+        </p>
+        <form id="otpVerifyForm" class="premium-structured-form" novalidate>
+          <div class="filter-input-wrapper">
+            <label class="form-element-label-style">Enter 6-Digit Secure Code Matrix</label>
+            <div class="otp-input-row"
+              style="display: flex; gap: 8px; justify-content: space-between; margin-top: 12px; margin-bottom: 4px;">
+              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
+                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
+                pattern="[0-9]" inputmode="numeric">
+              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
+                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
+                pattern="[0-9]" inputmode="numeric">
+              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
+                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
+                pattern="[0-9]" inputmode="numeric">
+              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
+                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
+                pattern="[0-9]" inputmode="numeric">
+              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
+                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
+                pattern="[0-9]" inputmode="numeric">
+              <input type="text" class="form-text-input-element otp-digit-field" maxlength="1" required
+                style="text-align: center; font-size: 22px; font-weight: 800; width: 44px; height: 52px; padding: 0; background: var(--bg-surface-2); border: 1px solid var(--bg-surface-3); color:#fff;"
+                pattern="[0-9]" inputmode="numeric">
+            </div>
+
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; margin-bottom: 8px;">
+              <span id="otpCountdownText" style="font-size: 13px; color: var(--color-text-secondary);">Resend
+                verification in <b id="otpTimerSeconds" style="color:var(--accent-futsal);">30</b> seconds</span>
+              <button type="button" id="resendOtpBtn"
+                style="background:none; border:none; color:var(--color-primary); font-size:13px; font-weight:700; cursor:pointer; padding:0; display:none;">Resend
+                OTP Key</button>
+            </div>
+            <p class="form-field-contextual-hint">Staging Sandbox validation gate pass token: <code
+                class="inline-code-snippet">123456</code></p>
+          </div>
+          <div class="modal-action-footer-strip" style="margin-top: 24px;">
+            <button type="submit" class="action-btn-primary size-md">
+              <span>Verify & Bind Profile</span>
+            </button>
+            <button type="button" id="otpBackToPhoneBtn" class="action-btn-secondary size-md">
+              Back
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 

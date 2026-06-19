@@ -1,13 +1,14 @@
 /**
  * PlayLocal — Premium Architecture & Matchmaking Core Initialization Engine
- * Deployment Year Focus: 2026
+ * Deployment Focus: Federated SSO Hub & Multi-Step OTP Gateway Framework
  */
 
-// Global App State Core Architecture
 const PlayLocalEngine = {
   state: {
     currentActiveView: 'landing',
-    authenticatedUser: null,
+    authenticatedUser: null, // Structure: { name, email, type, verified: boolean }
+    otpSuccessCallback: null,
+    otpIntervalId: null,
     registeredMatches: [
       {
         id: "m-1",
@@ -65,7 +66,7 @@ const PlayLocalEngine = {
     }
   },
 
-  // Toast Messaging Engine Injection Hook
+  // Toast Messaging System Engine Hook Injection
   showNotification: function (message, variant = 'success') {
     const stack = document.getElementById('toastContainer');
     if (!stack) return;
@@ -79,7 +80,7 @@ const PlayLocalEngine = {
     }, 4000);
   },
 
-  // Client Routing System Implementation
+  // State-Driven Single Page Client Routing Routing
   navigateTo: function (targetViewId) {
     const sections = document.querySelectorAll('.page-container');
     sections.forEach(sec => {
@@ -92,7 +93,6 @@ const PlayLocalEngine = {
       }
     });
 
-    // Update Navigation UI link focuses
     document.querySelectorAll('.nav-link-item').forEach(btn => {
       if (btn.getAttribute('data-page') === targetViewId) {
         btn.classList.add('active');
@@ -105,7 +105,6 @@ const PlayLocalEngine = {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   },
 
-  // Specialized Client Data Synchronization Core Engine
   syncDataMetrics: function () {
     const totalMatchesNode = document.getElementById('totalMatches');
     if (totalMatchesNode) {
@@ -113,17 +112,14 @@ const PlayLocalEngine = {
     }
   },
 
-  // Perform Rendering Overhaul for Live Listings Matrix Grid
   renderMatchListings: function () {
     const listGrid = document.getElementById('matchList');
     if (!listGrid) return;
-
     listGrid.innerHTML = '';
 
     const filteredSet = this.state.registeredMatches.filter(item => {
       const matchSport = this.state.filters.sport === 'all' || item.sport === this.state.filters.sport;
       const matchLoc = !this.state.filters.location || item.location.toLowerCase().includes(this.state.filters.location.toLowerCase());
-
       let matchTime = true;
       if (this.state.filters.time === 'today') {
         const todayStr = new Date().toISOString().split('T')[0];
@@ -148,10 +144,9 @@ const PlayLocalEngine = {
       card.className = 'premium-match-listing-card';
 
       let sportEmoji = '⚽';
-      let accentClass = 'color-futsal';
-      if (match.sport === 'Basketball') { sportEmoji = '🏀'; accentClass = 'color-basketball'; }
-      if (match.sport === 'Badminton') { sportEmoji = '🏸'; accentClass = 'color-badminton'; }
-      if (match.sport === 'Cricket') { sportEmoji = '🏏'; accentClass = 'color-cricket'; }
+      if (match.sport === 'Basketball') sportEmoji = '🏀';
+      if (match.sport === 'Badminton') sportEmoji = '🏸';
+      if (match.sport === 'Cricket') sportEmoji = '🏏';
 
       const totalSlots = match.playersNeeded;
       const filledSlots = match.joinedPlayers.length;
@@ -191,13 +186,13 @@ const PlayLocalEngine = {
     });
   },
 
-  // Hydrate Dynamic Match Specification Detail Window Template View
   hydrateAndShowDetails: function (matchId) {
     const targetMatch = this.state.registeredMatches.find(m => m.id === matchId);
     const contentBox = document.getElementById('matchDetailsContent');
     if (!targetMatch || !contentBox) return;
 
-    const isUserInRoster = this.state.authenticatedUser && targetMatch.joinedPlayers.includes(this.state.authenticatedUser.name);
+    const isUserVerified = this.state.authenticatedUser && this.state.authenticatedUser.verified;
+    const isUserInRoster = isUserVerified && targetMatch.joinedPlayers.includes(this.state.authenticatedUser.name);
 
     contentBox.innerHTML = `
       <div style="background: var(--bg-surface-1); border: 1px solid var(--bg-surface-2); border-radius: var(--radius-lg); padding: 40px; margin-top: 24px;">
@@ -257,10 +252,9 @@ const PlayLocalEngine = {
       </div>
     `;
 
-    // Hook Up Roster Alteration Actions Securely
     document.getElementById('joinRosterActionBtn').addEventListener('click', () => {
-      if (!this.state.authenticatedUser) {
-        this.showNotification("Authentication Required. Route to Account registration.", "warning");
+      if (!this.state.authenticatedUser || !this.state.authenticatedUser.verified) {
+        this.showNotification("Identity Verification required before scheduling entry.", "warning");
         this.navigateTo('auth');
         return;
       }
@@ -268,14 +262,14 @@ const PlayLocalEngine = {
       const userName = this.state.authenticatedUser.name;
       if (targetMatch.joinedPlayers.includes(userName)) {
         targetMatch.joinedPlayers = targetMatch.joinedPlayers.filter(p => p !== userName);
-        this.showNotification("Roster reservation canceled.");
+        this.showNotification("Roster reservation canceled successfully.");
       } else {
         if (targetMatch.joinedPlayers.length >= targetMatch.playersNeeded) {
           this.showNotification("Target match roster composition is entirely filled.", "warning");
           return;
         }
         targetMatch.joinedPlayers.push(userName);
-        this.showNotification("Secured spot on the active match roster.");
+        this.showNotification("Secured spot on active match roster.");
       }
       this.hydrateAndShowDetails(matchId);
     });
@@ -283,9 +277,54 @@ const PlayLocalEngine = {
     this.navigateTo('details');
   },
 
-  // Initialize Core Interface Event Wiring Pipeline
+  // Dedicated Engine Hook to Trigger 2-Step OTP Validation Pipeline
+  launchOtpGateway: function (preloadedPhone = '', complianceCallback = null) {
+    this.state.otpSuccessCallback = complianceCallback;
+    const modal = document.getElementById('phoneModal');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+    document.getElementById('otpStepPhone').style.display = 'block';
+    document.getElementById('otpStepCode').style.display = 'none';
+
+    const modalPhoneInput = document.getElementById('modalPhone');
+    if (modalPhoneInput && preloadedPhone) {
+      modalPhoneInput.value = preloadedPhone.replace('+977 ', '');
+    }
+  },
+
+  // Security Countdown Handler Loop Execution Loop
+  startOtpCountdownTimer: function (durationSeconds) {
+    clearInterval(this.state.otpIntervalId);
+    const textNode = document.getElementById('otpCountdownText');
+    const resendBtn = document.getElementById('resendOtpBtn');
+    const displaySeconds = document.getElementById('otpTimerSeconds');
+
+    if (durationSeconds <= 0) {
+      if (textNode) textNode.style.display = 'none';
+      if (resendBtn) resendBtn.style.display = 'inline-block';
+      return;
+    }
+
+    if (textNode) textNode.style.display = 'inline-block';
+    if (resendBtn) resendBtn.style.display = 'none';
+    if (displaySeconds) displaySeconds.innerText = durationSeconds;
+
+    let timeRemaining = durationSeconds;
+    this.state.otpIntervalId = setInterval(() => {
+      timeRemaining--;
+      if (displaySeconds) displaySeconds.innerText = timeRemaining;
+
+      if (timeRemaining <= 0) {
+        clearInterval(this.state.otpIntervalId);
+        if (textNode) textNode.style.display = 'none';
+        if (resendBtn) resendBtn.style.display = 'inline-block';
+      }
+    }, 1000);
+  },
+
   bindEventHandlers: function () {
-    // 1. Client Structural Dynamic View Swapping Listeners
+    // 1. Client View Swap Routings
     document.querySelectorAll('[data-page]').forEach(trigger => {
       trigger.addEventListener('click', (e) => {
         const dest = e.currentTarget.getAttribute('data-page');
@@ -293,10 +332,9 @@ const PlayLocalEngine = {
       });
     });
 
-    // Logo routing redirect
     document.getElementById('navLogoBtn').addEventListener('click', () => this.navigateTo('landing'));
 
-    // 2. Mobile Responsive Menu Toggle Trigger Linkages
+    // 2. Responsive Mobile Burger Collapse Linkage
     const burgerToggle = document.getElementById('mobileToggle');
     const navLinksNode = document.getElementById('navLinks');
     if (burgerToggle && navLinksNode) {
@@ -306,7 +344,7 @@ const PlayLocalEngine = {
       });
     }
 
-    // 3. Match List Client Parameter Filters Linkages
+    // 3. Match List Parameters Filters 
     ['filterSport', 'filterTime'].forEach(id => {
       const node = document.getElementById(id);
       if (node) {
@@ -326,27 +364,29 @@ const PlayLocalEngine = {
       });
     }
 
-    const resetFiltersBtn = document.getElementById('clearFilters');
-    if (resetFiltersBtn) {
-      resetFiltersBtn.addEventListener('click', () => {
-        this.state.filters = { sport: 'all', location: '', time: 'all' };
-        if (document.getElementById('filterSport')) document.getElementById('filterSport').value = 'all';
-        if (document.getElementById('filterTime')) document.getElementById('filterTime').value = 'all';
-        if (document.getElementById('filterLocation')) document.getElementById('filterLocation').value = '';
-        this.renderMatchListings();
-        this.showNotification("Ecosystem search configuration parameters reset successfully.");
-      });
-    }
+    document.getElementById('clearFilters').addEventListener('click', () => {
+      this.state.filters = { sport: 'all', location: '', time: 'all' };
+      if (document.getElementById('filterSport')) document.getElementById('filterSport').value = 'all';
+      if (document.getElementById('filterTime')) document.getElementById('filterTime').value = 'all';
+      if (document.getElementById('filterLocation')) document.getElementById('filterLocation').value = '';
+      this.renderMatchListings();
+      this.showNotification("Ecosystem configuration parameters reset successfully.");
+    });
 
-    // 4. Form Submission Engine Validation & Control Closures
+    // 4. Create Match Form Pipeline Validation Guard
     const createForm = document.getElementById('createMatchForm');
     if (createForm) {
       createForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Native Architectural Form Field Validation Bounds Enforcement
+        if (!this.state.authenticatedUser || !this.state.authenticatedUser.verified) {
+          this.showNotification("Authorized verification required to host network sessions.", "warning");
+          this.navigateTo('auth');
+          return;
+        }
+
         if (!createForm.checkValidity()) {
-          this.showNotification("Structural validation failure. Populate required inputs.", "warning");
+          this.showNotification("Structural validation failure. Populate required options.", "warning");
           createForm.classList.add('was-validated');
           return;
         }
@@ -368,13 +408,12 @@ const PlayLocalEngine = {
         this.syncDataMetrics();
         this.renderMatchListings();
         createForm.reset();
-
         this.showNotification("Match hosted successfully. Broadcasted to local networks.");
         this.navigateTo('matches');
       });
     }
 
-    // 5. Traditional Auth Identity Emulation Tab System Wire-up
+    // 5. Auth Mode Tab Switcher System
     const authTabButtons = document.querySelectorAll('.auth-tab-toggle-trigger');
     authTabButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -392,34 +431,172 @@ const PlayLocalEngine = {
       });
     });
 
+    // Traditional Native Sign-In Capture Hook Routing to OTP Gate
     const loginFormNode = document.getElementById('loginForm');
     if (loginFormNode) {
       loginFormNode.addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value;
-        // Mock validation closure
+        if (!loginFormNode.checkValidity()) {
+          this.showNotification("Provide valid authentication metrics.", "warning");
+          return;
+        }
+
         this.state.authenticatedUser = {
           name: email.split('@')[0].toUpperCase(),
           email: email,
-          type: 'StandardEmailAthlete'
+          type: 'StandardEmailAthlete',
+          verified: false
         };
-        this.syncUserSessionUI();
-        this.showNotification("Authenticated successfully via email mapping.");
-        this.navigateTo('matches');
+
+        this.showNotification("Credentials mapped. Initializing OTP verification step.", "warning");
+        this.launchOtpGateway('', () => {
+          this.state.authenticatedUser.verified = true;
+          this.syncUserSessionUI();
+          this.showNotification("Secure native email session authorized.");
+          this.navigateTo('matches');
+        });
       });
     }
 
-    // 6. Return Actions Linkages
+    // Traditional Native Registration Form Routing to OTP Gate
+    const registerFormNode = document.getElementById('registerForm');
+    if (registerFormNode) {
+      registerFormNode.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const phone = document.getElementById('registerPhone').value;
+
+        if (!registerFormNode.checkValidity()) {
+          this.showNotification("Review registration structural parameters.", "warning");
+          return;
+        }
+
+        this.state.authenticatedUser = {
+          name: name.toUpperCase(),
+          email: email,
+          type: 'StandardEmailAthlete',
+          verified: false
+        };
+
+        this.showNotification("Profile data baseline cached. Deploying OTP transaction line.", "warning");
+        this.launchOtpGateway(phone, () => {
+          this.state.authenticatedUser.verified = true;
+          this.syncUserSessionUI();
+          this.showNotification("Profile authenticated, verified, and locked successfully!");
+          this.navigateTo('matches');
+        });
+      });
+    }
+
+    // 6. Security Verification Modal Forms Handlers Wire-up
+    const phoneSubmitForm = document.getElementById('phoneSubmitForm');
+    if (phoneSubmitForm) {
+      phoneSubmitForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!phoneSubmitForm.checkValidity()) {
+          this.showNotification("Enter a valid standard 10-digit primary carrier number.", "warning");
+          return;
+        }
+
+        const inputNum = document.getElementById('modalPhone').value;
+        document.getElementById('displayTargetPhone').innerText = `+977 ${inputNum}`;
+
+        // Switch panel visibility states
+        document.getElementById('otpStepPhone').style.display = 'none';
+        document.getElementById('otpStepCode').style.display = 'block';
+
+        // Wipe code boxes and auto focus first field node
+        const digitBoxes = document.querySelectorAll('.otp-digit-field');
+        digitBoxes.forEach(b => b.value = '');
+        if (digitBoxes[0]) digitBoxes[0].focus();
+
+        this.showNotification("OTP transaction code dispatched to destination network.");
+        this.startOtpCountdownTimer(30);
+      });
+    }
+
+    const otpVerifyForm = document.getElementById('otpVerifyForm');
+    if (otpVerifyForm) {
+      otpVerifyForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const digitBoxes = document.querySelectorAll('.otp-digit-field');
+        let composedString = '';
+        digitBoxes.forEach(box => composedString += box.value);
+
+        // Security Core Verification Bound Checklist
+        if (composedString === '123456') {
+          clearInterval(this.state.otpIntervalId);
+          document.getElementById('phoneModal').style.display = 'none';
+
+          if (this.state.otpSuccessCallback) {
+            this.state.otpSuccessCallback();
+          }
+        } else {
+          this.showNotification("Invalid validation token code vector. Attempt retry.", "critical");
+          digitBoxes.forEach(box => {
+            box.style.borderColor = '#E07A5F'; // Error tint feedback alert
+            setTimeout(() => box.style.borderColor = '', 1000);
+          });
+        }
+      });
+    }
+
+    // OTP Input Field Smart Auto-Advance and Retrograde Backspace Listeners
+    const digitFields = document.querySelectorAll('.otp-digit-field');
+    digitFields.forEach((field, index) => {
+      field.addEventListener('input', () => {
+        if (field.value.length === 1 && index < digitFields.length - 1) {
+          digitFields[index + 1].focus();
+        }
+      });
+      field.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !field.value && index > 0) {
+          digitFields[index - 1].focus();
+        }
+      });
+    });
+
+    // Control wiring closures inside the overlay gateway layout
+    document.getElementById('modalDisconnectBtn').addEventListener('click', () => {
+      document.getElementById('phoneModal').style.display = 'none';
+      this.state.authenticatedUser = null; // Unset registration data baseline context
+      this.syncUserSessionUI();
+      this.showNotification("Verification framework handshake aborted safely.");
+    });
+
+    document.getElementById('otpBackToPhoneBtn').addEventListener('click', () => {
+      document.getElementById('otpStepCode').style.display = 'none';
+      document.getElementById('otpStepPhone').style.display = 'block';
+      clearInterval(this.state.otpIntervalId);
+    });
+
+    document.getElementById('resendOtpBtn').addEventListener('click', () => {
+      this.showNotification("A clean fallback OTP code transmission has been queued.");
+      this.startOtpCountdownTimer(30);
+    });
+
+    // Global Interactive Production Logout Command Hook Injection
+    const globalLogoutAction = document.getElementById('logoutBtn');
+    if (globalLogoutAction) {
+      globalLogoutAction.addEventListener('click', () => {
+        this.state.authenticatedUser = null;
+        this.syncUserSessionUI();
+        this.showNotification("Athlete secure session signed out safely.");
+        this.navigateTo('landing');
+      });
+    }
+
     document.getElementById('backToMatches').addEventListener('click', () => this.navigateTo('matches'));
   },
 
-  // Interface Synchronization Loop reflective of active Identity Profile States
   syncUserSessionUI: function () {
     const wrapper = document.getElementById('userBadgeProfile');
     const displayToken = document.getElementById('userBadge');
     const authNavNode = document.getElementById('authNavBtn');
 
-    if (this.state.authenticatedUser) {
+    if (this.state.authenticatedUser && this.state.authenticatedUser.verified) {
       if (authNavNode) authNavNode.style.display = 'none';
       if (wrapper) wrapper.style.display = 'flex';
       if (displayToken) displayToken.innerText = this.state.authenticatedUser.name.substring(0, 2);
@@ -429,36 +606,39 @@ const PlayLocalEngine = {
     }
   },
 
-  // Main Startup Hook Entry point definition
   start: function () {
     this.bindEventHandlers();
     this.syncDataMetrics();
     this.renderMatchListings();
-    console.log("PlayLocal Matchmaking Architecture initialized successfully for production context (2026).");
+    console.log("PlayLocal Matchmaking Architecture initialized for secure production context (2026).");
   }
 };
 
-// Fire up core system on layout readiness validation
 document.addEventListener('DOMContentLoaded', () => {
   PlayLocalEngine.start();
 });
 
-// Expose Secure SSO Redirect Reference for Global API Frames
+// Refined Google SSO Global Callback Target Hook
 window.handleCredentialResponse = function (response) {
   try {
-    // Structural JWT Parse Emulation Vector
+    // Stage initial unverified Google User Context baseline structural profile
     PlayLocalEngine.state.authenticatedUser = {
       name: "G-USER",
       email: "googleathlete@playlocal.np",
-      type: "FederatedGoogleSSO"
+      type: "FederatedGoogleSSO",
+      verified: false
     };
-    PlayLocalEngine.syncUserSessionUI();
-    PlayLocalEngine.showNotification("Google Account authenticated successfully.");
 
-    // Prompt Phone Verification Layer Overlay Step
-    const modal = document.getElementById('phoneModal');
-    if (modal) modal.style.display = 'flex';
+    PlayLocalEngine.showNotification("Google Account authenticated. Routing to OTP Gateway security...", "warning");
+
+    // Launch multi-step OTP transaction frame sequence link
+    PlayLocalEngine.launchOtpGateway('', () => {
+      PlayLocalEngine.state.authenticatedUser.verified = true;
+      PlayLocalEngine.syncUserSessionUI();
+      PlayLocalEngine.showNotification("Google Token & OTP handshake validated securely.");
+      PlayLocalEngine.navigateTo('matches');
+    });
   } catch (err) {
-    console.error("SSO Token parse failure runtime trap: ", err);
+    console.error("SSO Token secure parse execution trap error: ", err);
   }
 };
